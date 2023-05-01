@@ -1,0 +1,163 @@
+<html>
+
+<head>
+    <title>轉盤</title>
+    <link rel="stylesheet" href="../turntable/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../turntable/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="../turntable/css/style.css">
+    <script type="text/javascript" src="../turntable/js/Winwheel.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <main>
+            <div class="py-5 text-center">
+                <h2>隨機轉盤</h2>
+                <p class="lead">抽籤轉盤可以在你輸入的項目中，隨機的選擇其中一個項目。</p>
+            </div>
+            <div class="row g-5">
+                <div class="col-md-5 col-lg-4 order-md-last">
+                    <div class="Wheel_PrizeResult">
+                        <div class="Wheel_PrizeResult_Title">轉盤結果</div>
+                        <div id="Result_Content" class="Wheel_PrizeResult_Content">???</div>
+                    </div>
+                    <p>輸入資料區</p>
+                    <textarea id="input-data" rows="15" style="width: 100%;">
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+                    </textarea>
+                    <button class="data-btn w-100" onClick="setData();">生成</button>
+                    <!-- <button class="remove-btn w-100" onClick="removeData();">移除中獎項目</button> -->
+                </div>
+                <div class="col-md-7 col-lg-8">
+                    <div class="row g-3">
+                        <div class="col-12" style="text-align: center;">
+                            <div class="the_wheel"><canvas id="canvas" width="434" height="434"></canvas></div>
+
+                        </div>
+
+                        <div class="col-12" style="text-align: center;">
+                            <button class="spin-btn w-50" onClick="startSpin();">開始</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let wheelPower = 1;
+        let wheelSpinning = false;
+        let wheelEnd = false;
+        var data = [];
+        var colors = ['#eae56f', '#89f26e', '#7de6ef', '#e7706f'];
+        var color_arr_Index = 0;
+        var result = "";
+
+        var str;
+        var input_data;
+
+        let theWheel = new Winwheel({
+            'numSegments': 1,     // Specify number of segments.
+            'outerRadius': 212,   // Set outer radius so wheel fits inside the background.
+            'textFontSize': 28,    // Set font size as desired.
+            'segments': [{ 'fillStyle': '#eae56f', 'text': '' }],
+            'animation':           // Specify the animation to use.
+            {
+                'type': 'spinToStop',
+                'duration': 5,     // Duration in seconds.
+                'spins': 8,     // Number of complete spins.
+                'callbackFinished': resetWheel
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            setData();
+        });
+
+        function removeData(){
+            if(!isBlank(result)){
+                str = document.getElementById("input-data").value;
+                input_data = str.split('\n');
+                var current_Index = input_data.indexOf(result);           
+                if(current_Index > -1){
+                    input_data.splice(current_Index,1);
+                    var input = input_data.join('\n');
+                    document.getElementById("input-data").value = input;
+                    setData();
+                }
+            }
+        }
+
+        function getColor() {
+            var parameter = colors[color_arr_Index]; // 從陣列中獲取當前的參數
+            color_arr_Index = (color_arr_Index + 1) % colors.length; // 將當前索引加1，如果已經到達最後一個參數，則重新從第一個開始
+            return parameter; // 返回獲取的參數
+        }
+
+        function setData() {
+            data = new Array();
+            str = document.getElementById("input-data").value;
+            input_data = str.split('\n');
+            input_data.forEach(element => {
+                if (!isBlank(element)) {
+                    str.trim();
+                    data.push({ 'fillStyle': getColor(), 'text': element });
+                }
+            });
+
+            theWheel = new Winwheel({
+                'numSegments': data.length,     // Specify number of segments.
+                'outerRadius': 212,   // Set outer radius so wheel fits inside the background.
+                'textFontSize': 28,    // Set font size as desired.
+                'segments': data,
+                'animation':           // Specify the animation to use.
+                {
+                    'type': 'spinToStop',
+                    'duration': 5,     // Duration in seconds.
+                    'spins': 3,     // Number of complete spins.
+                    'callbackFinished': alertPrize
+                }
+            });
+        }
+
+        function isBlank(str) {
+            return (!str || /^\s*$/.test(str));
+        }
+
+        function startSpin() {
+            if (wheelEnd) { resetWheel(); }
+            if (wheelSpinning == false) {
+                theWheel.startAnimation();
+                wheelSpinning = true;
+            }
+        }
+
+        function resetWheel() {
+            theWheel.stopAnimation(false);
+            theWheel.rotationAngle = 0;
+            theWheel.draw();
+
+            wheelSpinning = false;
+        }
+
+        function alertPrize(indicatedSegment) {
+            result = indicatedSegment.text;  
+            var rc = document.getElementById("Result_Content");
+            rc.innerHTML = indicatedSegment.text;
+            wheelEnd = true;
+        }
+    </script>
+</body>
+
+</html>

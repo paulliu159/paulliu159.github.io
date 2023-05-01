@@ -1,0 +1,68 @@
+.data-btn {
+  display: block;
+  margin: 0 auto;
+  margin-top: 15px;
+  font-size: 18px;
+  padding: 10px 20px;
+  background-color: #067510;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.spin-btn {
+  display: block;
+  margin: 0 auto;
+  margin-top: 30px;
+  font-size: 18px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.remove-btn {
+  display: block;
+  margin: 0 auto;
+  margin-top: 10px;
+  font-size: 18px;
+  padding: 10px 20px;
+  background-color: #c92153;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.remove-btn .dis{
+  background-color: #d4b4be;
+}
+
+.Wheel_PrizeResult {
+  border: 2px solid #888;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 15px
+}
+
+.Wheel_PrizeResult_Title {
+  background-color: #322e2e;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px 5px
+}
+
+.Wheel_PrizeResult_Content {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  padding: 10px
+}
