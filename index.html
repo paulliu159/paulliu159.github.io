@@ -2,10 +2,10 @@
 
 <head>
     <title>轉盤</title>
-    <link rel="stylesheet" href="../turntable/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../turntable/css/main.css" type="text/css" />
-    <link rel="stylesheet" href="../turntable/css/style.css">
-    <script type="text/javascript" src="../turntable/js/Winwheel.js"></script>
+    <link rel="stylesheet" href="../paulliu159.github.io/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../paulliu159.github.io/css/main.css" type="text/css" />
+    <link rel="stylesheet" href="../paulliu159.github.io/css/style.css">
+    <script type="text/javascript" src="../paulliu159.github.io/js/Winwheel.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
 </head>
 
@@ -138,6 +138,7 @@
         function startSpin() {
             if (wheelEnd) { resetWheel(); }
             if (wheelSpinning == false) {
+                document.getElementById("Result_Content").innerHTML="???";
                 theWheel.startAnimation();
                 wheelSpinning = true;
             }
